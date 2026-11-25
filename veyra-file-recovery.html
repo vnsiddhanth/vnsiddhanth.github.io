@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Veyra file recovery PRD</title>
+<meta name="description" content="Product proposal and wireframes: helping Veyra users recover when a video file fails.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--bg:#F2F3F7;--surface:#fff;--ink:#0E1322;--muted:#566076;--rule:#D5DAE6;--fill:#E6E9F1;--accent:#3049F0;--on:#fff;--signal:#B8430A;
+--display:"Archivo",Arial,sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--bg:#0B0E17;--surface:#121827;--ink:#E9ECF4;--muted:#98A1B5;--rule:#2B344B;--fill:#1D2539;--accent:#8F9DFF;--on:#0B0E17;--signal:#FF8A4C;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--body)}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px));padding-block:32px 80px}
+a{color:var(--accent)}a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);line-height:1.1;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,6vw,60px);font-weight:800;letter-spacing:-.03em;margin-top:28px;max-width:16ch}
+h2{font-size:27px;margin:60px 0 14px}h3{font-size:17px;margin:0 0 4px}
+p,li{max-width:68ch}.lede{font-size:19px;color:var(--muted)}
+.note{border:1px solid var(--rule);background:var(--surface);padding:12px 16px;border-radius:8px;font-size:14.5px;max-width:76ch}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:15px;min-width:560px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px 10px 0;border-top:1px solid var(--rule)}th{color:var(--muted);font-weight:500}
+code{font-family:var(--mono);font-size:.88em}
+.flow{display:flex;flex-wrap:wrap;gap:8px;padding:0;list-style:none}.flow li{border:1px solid var(--rule);background:var(--surface);padding:7px 12px;border-radius:6px;font-size:14px}.flow li+li::before{content:"→ ";color:var(--muted)}
+.frames{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 24px}@media(max-width:760px){.frames{grid-template-columns:1fr}}
+figure{margin:0;min-width:0}figcaption{font-size:14px;color:var(--muted);margin-top:10px}
+.wf{border:1.5px solid var(--muted);border-radius:8px;background:var(--surface);font-size:13.5px;line-height:1.4;overflow:hidden}
+.wf .top{display:flex;justify-content:space-between;gap:8px;padding:9px 13px;border-bottom:1.5px solid var(--muted);font-family:var(--mono);font-size:12px}
+.wf .in{padding:14px;display:grid;gap:10px;min-height:232px;align-content:start}
+.box{border:1px solid var(--muted);border-radius:5px;padding:9px 11px}.box.dash{border-style:dashed}.box.err{border-color:var(--signal);border-width:1.5px}
+.row{display:flex;flex-wrap:wrap;gap:8px}.b{border:1.5px solid var(--ink);border-radius:5px;padding:6px 11px;font-weight:500}.b.p{background:var(--ink);color:var(--bg)}
+.small{font-size:12.5px;color:var(--muted)}.ph{height:54px;background:var(--fill);border-radius:5px}
+</style>
+</head>
+<body><main class="wrap">
+<a href="./index.html#veyra">← Portfolio</a>
+<h1>Helping people recover when a file fails</h1>
+<p class="lede">A product proposal for Veyra, the browser video editor. One-page PRD, policies and five wireframes.</p>
+<p class="note"><strong>Status: proposal, not built.</strong> November 2026. Drafted with Claude Code from Veyra's current source. It has not been tested with users, and the targets below still need baselines.</p>
+
+<h2>Problem</h2>
+<p>Video files are often cut off, unusual or in a format the browser can't decode. Veyra's shared error panel explains what went wrong and offers one link, "Report this problem". It has no shared next step.</p>
+<ul>
+<li>The report link opens a new page, so the file and settings on the tool page are lost.</li>
+<li>Sending a report needs an email app or a GitHub account, or copying the text by hand.</li>
+<li>People who only want their video finished have to work out the fix themselves.</li>
+</ul>
+
+<h2>Goal and scope</h2>
+<p><strong>Goal:</strong> someone whose file fails can see a likely fix, try it without choosing the file again, and report the problem if it doesn't work.</p>
+<div class="scroll"><table><tr><th>In scope</th><th>Out of scope</th></tr><tr><td>Single-file tools: error panel, suggested fix, retry, short report</td><td>The timeline editor, accounts, live chat, uploading any video for support</td></tr></table></div>
+
+<h2>User journey</h2>
+<ol class="flow"><li>Choose a file</li><li>File fails</li><li>See cause and fix</li><li>Try the fix</li><li>Download, or report</li></ol>
+
+<h2>Wireframes</h2>
+<div class="frames">
+<figure><div class="wf"><div class="top"><span>Trim video</span><span>Today</span></div><div class="in"><div class="box">holiday.mov</div><div class="box err">! This browser cannot decode the video.<br><u>Report this problem</u></div></div></div><figcaption><h3>Today: a dead end</h3>The user learns the cause but not what to do.</figcaption></figure>
+<figure><div class="wf"><div class="top"><span>Trim video</span><span>1</span></div><div class="in"><div class="box">holiday.mov · 48 MB</div><div class="box err"><strong>We can't read this video here</strong><br>Your browser doesn't support its format.<br><br><div class="row"><span class="b p">Show ways to fix it</span><span class="b">Choose another file</span></div></div><span class="small">Your file is still on this device.</span></div></div><figcaption><h3>1. Explain and offer a next step</h3>Plain language first. The technical detail is tucked away.</figcaption></figure>
+<figure><div class="wf"><div class="top"><span>Ways to fix it</span><span>2</span></div><div class="in"><div class="box"><strong>Try another browser</strong><br><span class="small">See which formats each browser supports</span></div><div class="box"><strong>Choose a different copy</strong><br><span class="small">Export it again as MP4 from the source app</span></div><div class="box dash">Technical detail ▾</div><u>None of these worked</u></div></div><figcaption><h3>2. Fixes matched to the cause</h3>The options depend on the error, as listed below.</figcaption></figure>
+<figure><div class="wf"><div class="top"><span>Trim video</span><span>3</span></div><div class="in"><div class="box">clip.mp4 · settings kept</div><div class="ph"></div><div>Trying again… 62%</div><div class="row"><span class="b">Cancel</span></div></div></div><figcaption><h3>3. Retry in place</h3>Shown for a damaged file being repaired. File and settings stay on the page.</figcaption></figure>
+<figure><div class="wf"><div class="top"><span>Report this file problem</span><span>4</span></div><div class="in"><div class="box dash">Tool: Trim video<br>Error: unsupported format<br>Browser details: included</div><div class="box">What were you trying to do? (optional)</div><div>☐ Include browser details</div><div class="row"><span class="b p">Copy report</span><span class="b">Email</span><span class="b">GitHub</span></div><span class="small">Nothing is sent until you choose to. No file or file name is included.</span></div></div><figcaption><h3>4. Report without leaving</h3>A panel over the tool, already filled in.</figcaption></figure>
+</div>
+
+<h2>Requirements</h2>
+<div class="scroll"><table><tr><th>Cause (existing error code)</th><th>What the user sees</th><th>Suggested fix</th></tr>
+<tr><td><code>unsupported-codec</code></td><td>Your browser doesn't support this format</td><td>Compatibility page, or another copy</td></tr>
+<tr><td><code>corrupt</code></td><td>This file looks damaged</td><td>Try repair, then retry in place</td></tr>
+<tr><td><code>no-tracks</code></td><td>This file has no video (or no sound)</td><td>Choose another file or a suitable tool</td></tr>
+<tr><td><code>no-encoder</code></td><td>Your browser can't create this output</td><td>Pick another output format</td></tr>
+<tr><td><code>too-large</code>, <code>out-of-memory</code></td><td>This file is too big for this device</td><td>Close other tabs, or use a smaller file</td></tr>
+<tr><td><code>validation-failed</code></td><td>The result didn't pass our checks</td><td>Retry once, then report</td></tr>
+<tr><td><code>unknown</code></td><td>Something went wrong</td><td>Retry once, then report</td></tr></table></div>
+<p>The other existing codes use the <code>unknown</code> treatment in the first version.</p>
+<p><strong>Must also:</strong> keep the file and settings while the panel is open, never offer a fix that can't apply, work by keyboard and screen reader, and work at phone width.</p>
+
+<h2>Policies</h2>
+<ul>
+<li><strong>Privacy:</strong> reports never include the video or its name. Browser details are optional and visible before sending.</li>
+<li><strong>Permission:</strong> no repair or retry starts until the user asks for it. The original file is never changed.</li>
+<li><strong>Triage:</strong> data loss or a wrong output comes first, then failures affecting several people, then single unusual files.</li>
+<li><strong>Repeat reports:</strong> three reports with the same tool and cause trigger a product review: fix it, improve the message, or document the limit.</li>
+</ul>
+
+<h2>How we'd know it works</h2>
+<div class="scroll"><table><tr><th>Measure</th><th>Baseline</th><th>First target</th></tr><tr><td>People who recover after a failure in a moderated test</td><td>Not known</td><td>4 of 5 with a fixable file</td></tr><tr><td>Reports that include the tool and cause</td><td>Not known</td><td>9 in 10</td></tr><tr><td>Repeat reports for the same cause</td><td>Not known</td><td>Falling month on month</td></tr></table></div>
+<p>These use moderated tests and reports people choose to send, so no new tracking is needed.</p>
+
+<h2>QA before launch</h2>
+<ul><li>Each error code shows the right message and only fixes that apply.</li><li>File and settings survive opening and closing the report panel.</li><li>A successful repair still passes Veyra's output checks.</li><li>The report contains no file name or file content.</li><li>Keyboard, screen reader, phone width, and Chrome, Edge and Firefox.</li></ul>
+
+<h2>Open questions</h2>
+<ul><li>How often does each error occur? There is no data yet.</li><li>Which damaged files can the repair tool really fix?</li><li>Is email, GitHub or copy the easiest way to report?</li></ul>
+</main></body></html>
